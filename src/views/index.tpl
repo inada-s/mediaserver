@@ -2,15 +2,12 @@
 <body>
 
 <div class="container">
-<form class="navbar-form navbar-right" role="search">
+<form class="navbar-form navbar-right" role="search" action="/mediasv/index">
 <div class="form-group">
-    <input type="text" class="form-control" placeholder="Search">
+    <input type="text" name="search" class="form-control" placeholder="Search" value="{{search}}">
 </div>
-<button type="submit" class="btn btn-default">
+<button type="submit" class="btn btn-default" formmethod="get">
     <span class="glyphicon glyphicon-search"></span>
-</button>
-<button type="submit" class="btn btn-default">
-    <span class="glyphicon glyphicon-plus"></span>
 </button>
 </form>
 </div>
@@ -20,8 +17,12 @@
  <tbody>
 % for mp4 in mp4list:
       <tr>
-        <td><img src="http://www.officetanaka.net/sample.jpg" class="img-thumbnail" width="200"></td>
-        <td><h3>{{mp4.name}}</h3></td>
+        <td><img src="{{mp4.thumb}}" class="img-thumbnail" width="300"></td>
+        <td>
+          <h3><a href="{{mp4.playpath}}" type="video/mp4">{{mp4.name}}</a></h3>
+	  <p>{{"%.2f GB" % (float(mp4.size)/1024.0/1024.0/1024.0)}}</p>
+	  <p>{{mp4.ctime}}</p>
+	</td>
       </tr>
 % end
     </tbody>
@@ -30,19 +31,17 @@
 <nav>
   <ul class="pagination">
     <li>
-      <a href="#" aria-label="Previous">
+      <a href="/mediasv/index?page={{str(max(1, page - 1)) + search_query}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
+% for i in xrange(maxpage):
+    <li><a href="/mediasv/index?page={{str(i + 1) + search_query}}">{{i + 1}}</a></li>
+% end
     <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
+    <a href="/mediasv/index?page={{str(min(page + 1, maxpage)) + search_query}}" aria-label="Next">
+      <span aria-hidden="true">&raquo;</span>
+    </a>
     </li>
   </ul>
 </nav>

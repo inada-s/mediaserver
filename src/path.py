@@ -6,6 +6,8 @@ import bottle
 src = dirname(abspath(__file__))
 root = dirname(src)
 www = join(root, 'www')
-mp4 = r'C:\rec\REC-MP4'
+mp4 = r'H:\REC-MP4'
+thumb = r'H:\thumb'
+link = r'H:\link'
 bottle.TEMPLATE_PATH.insert(0, join(src, 'views'))
 
